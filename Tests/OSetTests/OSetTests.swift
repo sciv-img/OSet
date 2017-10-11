@@ -302,6 +302,24 @@ class OSetTests: XCTestCase {
         })
     }
 
+    func testSwapAt() {
+        let cases = [
+            ([1, 2], 0, 1, [2, 1]),
+            ([1, 2, 3], 0, 2, [3, 2, 1]),
+            ([2, 1, 3], 1, 2, [2, 3, 1]),
+            ([3, 1, 2], 0, 1, [1, 3, 2]),
+            ([581, 5448, 23, 1, 0, 23954, 123, 456703], 2, 6, [581, 5448, 123, 1, 0, 23954, 23, 456703]),
+        ]
+        cases.forEach({
+            var oset = OSet($0)
+
+            oset.swapAt($1, $2)
+
+            XCTAssertEqual(oset.a, $3)
+            XCTAssertEqual(oset.s, Set($3))
+        })
+    }
+
     // MARK: - Collection
     // MARK: Subscript
 

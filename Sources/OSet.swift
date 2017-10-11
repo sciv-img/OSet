@@ -116,6 +116,15 @@ public struct OSet<E: Hashable & Equatable>: SetAlgebra, MutableCollection, Rand
         return self.a.isEmpty
     }
 
+    public mutating func swapAt(_ i: Int, _ j: Int) {
+        guard i != j else {
+            return
+        }
+        let tmp = self.a[i]
+        self.a[i] = self.a[j]
+        self.a[j] = tmp
+    }
+
     // MARK: - Collection
     // MARK: Subscript
 
