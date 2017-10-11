@@ -4,7 +4,7 @@ internal func copy<E>(_ oset: OSet<E>, op: (inout OSet<E>) -> Void) -> OSet<E> {
     return copy
 }
 
-public struct OSet<E: Hashable & Equatable>: SetAlgebra, Sequence {
+public struct OSet<E: Hashable & Equatable>: SetAlgebra, MutableCollection, RandomAccessCollection {
     internal var a: [E]
     internal var s: Set<E>
 
@@ -92,7 +92,7 @@ public struct OSet<E: Hashable & Equatable>: SetAlgebra, Sequence {
     }
 
     // MARK: - SetAlgebra
-    // MARK: Sequence
+    // MARK: Collection
 
     public typealias Iterator = IndexingIterator<[E]>
 
@@ -100,7 +100,23 @@ public struct OSet<E: Hashable & Equatable>: SetAlgebra, Sequence {
         return self.a.makeIterator()
     }
 
-    // MARK: - Sequence
+    public var startIndex: Int {
+        return self.a.startIndex
+    }
+
+    public var endIndex: Int {
+        return self.a.endIndex
+    }
+
+    public func index(after: Int) -> Int {
+        return self.a.index(after: after)
+    }
+
+    public var isEmpty: Bool {
+        return self.a.isEmpty
+    }
+
+    // MARK: - Collection
     // MARK: Subscript
 
     public subscript(index: Int) -> E {

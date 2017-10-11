@@ -223,7 +223,7 @@ class OSetTests: XCTestCase {
     }
 
     // MARK: - SetAlgebra
-    // MARK: Sequence
+    // MARK: Collection
 
     func testIterator() {
         let cases = [
@@ -245,7 +245,64 @@ class OSetTests: XCTestCase {
         })
     }
 
-    // MARK: - Sequence
+    func testStartIndex() {
+        let cases = [
+            [],
+            [1],
+            [1, 2, 3],
+            [581, 5448, 23, 1, 0, 23954, 123, 456703]
+        ]
+        cases.forEach({
+            let oset = OSet($0)
+
+            XCTAssertEqual(oset.startIndex, 0)
+        })
+    }
+
+    func testEndIndex() {
+        let cases = [
+            ([], 0),
+            ([1], 1),
+            ([1, 2, 3], 3),
+            ([581, 5448, 23, 1, 0, 23954, 123, 456703], 8)
+        ]
+        cases.forEach({
+            let oset = OSet($0)
+
+            XCTAssertEqual(oset.endIndex, $1)
+        })
+    }
+
+    func testIndex() {
+        let cases = [
+            ([1], 0, 1),
+            ([1, 2, 3], 0, 1),
+            ([3, 2, 1], 1, 2),
+            ([2, 3, 1], 2, 3),
+            ([581, 5448, 23, 1, 0, 23954, 123, 456703], 3, 4)
+        ]
+        cases.forEach({
+            let oset = OSet($0)
+
+            XCTAssertEqual(oset.index(after: $1), $2)
+        })
+    }
+
+    func testIsEmpty() {
+        let cases = [
+            ([], true),
+            ([1], false),
+            ([1, 2, 3], false),
+            ([581, 5448, 23, 1, 0, 23954, 123, 456703], false)
+        ]
+        cases.forEach({
+            let oset = OSet($0)
+
+            XCTAssertEqual(oset.isEmpty, $1)
+        })
+    }
+
+    // MARK: - Collection
     // MARK: Subscript
 
     func testSubscriptGet() {
