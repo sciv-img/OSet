@@ -222,6 +222,46 @@ class OSetTests: XCTestCase {
         })
     }
 
+    func testSubtract() {
+        let cases = [
+            ([], [], []),
+            ([1], [1], []),
+            ([1, 2], [1], [2]),
+            ([1, 2], [3], [1, 2]),
+            ([1, 2, 3], [3, 1, 2], []),
+            ([3, 2, 1], [2], [3, 1]),
+        ]
+        cases.forEach({
+            var oset = OSet($0)
+
+            oset.subtract(OSet($1))
+
+            XCTAssertEqual(oset.a, $2)
+            XCTAssertEqual(oset.s, Set($2))
+        })
+    }
+
+    func testSubtracting() {
+        let cases = [
+            ([], [], []),
+            ([1], [1], []),
+            ([1, 2], [1], [2]),
+            ([1, 2], [3], [1, 2]),
+            ([1, 2, 3], [3, 1, 2], []),
+            ([3, 2, 1], [2], [3, 1]),
+        ]
+        cases.forEach({
+            let oset = OSet($0)
+
+            let out = oset.subtracting(OSet($1))
+
+            XCTAssertEqual(out.a, $2)
+            XCTAssertEqual(out.s, Set($2))
+            XCTAssertEqual(oset.a, $0)
+            XCTAssertEqual(oset.s, Set($0))
+        })
+    }
+
     // MARK: - SetAlgebra
     // MARK: Collection
 

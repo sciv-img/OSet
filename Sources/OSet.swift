@@ -91,6 +91,17 @@ public struct OSet<E: Hashable & Equatable>: SetAlgebra, MutableCollection, Rand
         return lhs.a == rhs.a
     }
 
+    public mutating func subtract(_ other: OSet) {
+        for e in other {
+            self.s.remove(e)
+        }
+        self.a = self.a.filter({ self.s.contains($0) })
+    }
+
+    public func subtracting(_ other: OSet) -> OSet {
+        return copy(self) { (s: inout OSet) in s.subtract(other) }
+    }
+
     // MARK: - SetAlgebra
     // MARK: Collection
 
