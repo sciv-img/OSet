@@ -1,0 +1,6 @@
+disabled_rules:
+  - line_length
+  - large_tuple
+
+identifier_name:
+  min_length: 1
