@@ -4,7 +4,7 @@ internal func copy<E>(_ oset: OSet<E>, op: (inout OSet<E>) -> Void) -> OSet<E> {
     return copy
 }
 
-public struct OSet<E: Hashable & Equatable>: SetAlgebra, MutableCollection, RandomAccessCollection {
+public struct OSet<E: Hashable & Comparable>: SetAlgebra, MutableCollection, RandomAccessCollection {
     internal var a: [E]
     internal var s: Set<E>
 
@@ -198,6 +198,16 @@ public struct OSet<E: Hashable & Equatable>: SetAlgebra, MutableCollection, Rand
         let tmp = self.a[i]
         self.a[i] = self.a[j]
         self.a[j] = tmp
+    }
+
+    /// Sorts the collection ascendingly, in place.
+    public mutating func sort() {
+        self.a.sort()
+    }
+
+    /// Sorts the collection in place, using given comparison predicate.
+    public mutating func sort(by: (E, E) throws -> Bool) rethrows {
+        try self.a.sort(by: by)
     }
 
     // MARK: - Collection

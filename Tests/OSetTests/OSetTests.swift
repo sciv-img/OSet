@@ -360,6 +360,39 @@ class OSetTests: XCTestCase {
         })
     }
 
+    func testSort() {
+        let cases = [
+            ([1, 2, 3], [1, 2, 3]),
+            ([3, 1, 2], [1, 2, 3]),
+            ([581, 5448, 23, 1, 0, 23954, 123, 456703], [0, 1, 23, 123, 581, 5448, 23954, 456703]),
+        ]
+        cases.forEach({
+            var oset = OSet($0)
+
+            oset.sort()
+
+            XCTAssertEqual(oset.a, $1)
+            XCTAssertEqual(oset.s, Set($1))
+        })
+    }
+
+    func testSortBy() {
+        let cases: [([Int], (Int, Int) -> Bool, [Int])] = [
+            ([1, 2, 3], { $0 < $1 }, [1, 2, 3]),
+            ([3, 1, 2], { $0 < $1 }, [1, 2, 3]),
+            ([2, 3, 1], { $0 > $1 }, [3, 2, 1]),
+            ([581, 5448, 23, 1, 0, 23954, 123, 456703], { $0 > $1 }, [456703, 23954, 5448, 581, 123, 23, 1, 0]),
+        ]
+        cases.forEach({
+            var oset = OSet($0)
+
+            oset.sort(by: $1)
+
+            XCTAssertEqual(oset.a, $2)
+            XCTAssertEqual(oset.s, Set($2))
+        })
+    }
+
     // MARK: - Collection
     // MARK: Subscript
 
