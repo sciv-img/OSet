@@ -214,7 +214,16 @@ public struct OSet<E: Hashable & Comparable>: SetAlgebra, MutableCollection, Ran
     // MARK: Subscript
 
     /// Gets or sets an item at the given index.
-    /// Enables the usual "`[]` notation" semantics.
+    /// Enables the `[]` notation.
+    ///
+    /// Note that Set, and OSet too, must not contain duplicates.
+    /// Therefore, if one sets an item that's equal to another item
+    /// already existing in the OSet, the old one will be removed.
+    /// E.g.
+    ///     let oset = OSet([1, 2, 3, 4])
+    ///     oset[1] = 4
+    ///     print(oset)
+    ///     // Prints "OSet([1, 4, 3])"
     public subscript(index: Int) -> E {
         get {
             return self.a[index]
