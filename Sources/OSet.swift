@@ -244,3 +244,9 @@ public struct OSet<E: Hashable & Comparable>: SetAlgebra, MutableCollection, Ran
 
     // MARK: - Subscript
 }
+
+extension OSet: CustomStringConvertible {
+    public var description: String {
+        return "OSet(\(self.a))"
+    }
+}
