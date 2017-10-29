@@ -236,7 +236,7 @@ public struct OSet<E: Hashable & Comparable>: SetAlgebra, MutableCollection, Ran
             self.a[index] = item
             self.s.update(with: item)
 
-            if idx != nil {
+            if idx != nil && idx! != index {
                 self.a.remove(at: idx!)
             }
         }
