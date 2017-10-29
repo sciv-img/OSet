@@ -1,6 +1,7 @@
 disabled_rules:
   - line_length
   - large_tuple
+  - trailing_comma
 
 identifier_name:
   min_length: 1
