@@ -206,9 +206,15 @@ public struct OSet<E: Hashable & Comparable>: SetAlgebra, MutableCollection, Ran
     }
 
     /// Sorts the collection in place, using given comparison predicate.
+#if swift(>=4.0)
     public mutating func sort(by: (E, E) throws -> Bool) rethrows {
         try self.a.sort(by: by)
     }
+#else
+    public mutating func sort(by: (E, E) -> Bool) {
+        self.a.sort(by: by)
+    }
+#endif
 
     // MARK: - Collection
     // MARK: Subscript
