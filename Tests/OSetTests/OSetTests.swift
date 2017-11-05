@@ -429,4 +429,32 @@ class OSetTests: XCTestCase {
     }
 
     // MARK: - Subscript
+
+    static var allTests = [
+        ("testInit", testInit),
+        ("testInitDup", testInitDup),
+        ("testContains", testContains),
+        ("testUnion", testUnion),
+        ("testIntersection", testIntersection),
+        ("testSymmetricDifference", testSymmetricDifference),
+        ("testInsert", testInsert),
+        ("testRemove", testRemove),
+        ("testUpdate", testUpdate),
+        ("testFormUnion", testFormUnion),
+        ("testFormIntersection", testFormIntersection),
+        ("testFormSymmetricDifference", testFormSymmetricDifference),
+        ("testEquals", testEquals),
+        ("testSubtract", testSubtract),
+        ("testSubtracting", testSubtracting),
+        ("testIterator", testIterator),
+        ("testStartIndex", testStartIndex),
+        ("testEndIndex", testEndIndex),
+        ("testIndex", testIndex),
+        ("testIsEmpty", testIsEmpty),
+        ("testSwapAt", testSwapAt),
+        ("testSort", testSort),
+        ("testSortBy", testSortBy),
+        ("testSubscriptGet", testSubscriptGet),
+        ("testSubscriptSet", testSubscriptSet),
+    ]
 }

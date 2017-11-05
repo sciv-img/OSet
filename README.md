@@ -1,4 +1,4 @@
-# OSet
+# OSet [![Build Status](https://travis-ci.org/sciv-img/OSet.svg?branch=master)](https://travis-ci.org/sciv-img/OSet)
 
 Fast, idiomatic Ordered Set data structure for Swift.
 
