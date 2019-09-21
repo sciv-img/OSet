@@ -3,5 +3,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "OSet"
+    name: "OSet",
+    products: [
+        .library(name: "OSet", targets: ["OSet"]),
+    ],
+    targets: [
+        .target(name: "OSet", dependencies: [], path: "Sources"),
+    ]
 )
