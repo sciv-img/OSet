@@ -3,18 +3,22 @@ os:
 language: generic
 sudo: required
 dist: trusty
+env:
+    - SWIFT_VERSION=4.2
+    - SWIFT_VERSION=5.0
+    - SWIFT_VERSION=5.1
+install:
+    - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
 matrix:
     include:
         - os: osx
-          osx_image: xcode8
-          env: SWIFT_VERSION=3.1.1
+          osx_image: xcode10
+          env: SWIFT_VERSION=4.2
         - os: osx
-          osx_image: xcode9
-          env: SWIFT_VERSION=4.0
-env:
-    - SWIFT_VERSION=3.1.1
-    - SWIFT_VERSION=4.0
-install:
-    - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
+          osx_image: xcode10
+          env: SWIFT_VERSION=5.0
+        - os: osx
+          osx_image: xcode10
+          env: SWIFT_VERSION=5.1
 script:
     - swift test
