@@ -9,5 +9,6 @@ let package = Package(
     ],
     targets: [
         .target(name: "OSet", dependencies: [], path: "Sources"),
+        .testTarget(name: "OSetTests", dependencies: ["OSet"], path: "Tests/OSetTests"),
     ]
 )
