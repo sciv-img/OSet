@@ -29,6 +29,14 @@ public struct OSet<E: Hashable & Comparable>: SetAlgebra, MutableCollection, Ran
     internal var a: [E]
     internal var s: Set<E>
 
+    /// Removes all members from the OSet.
+    ///
+    /// - Parameter keepingCapacity: If true, the OSet's buffer capacity is preserved; if false, the underlying buffer is released. The default is false.
+    public mutating func removeAll(keepingCapacity keepCapacity: Bool = false) {
+        a.removeAll(keepingCapacity: keepCapacity)
+        s.removeAll(keepingCapacity: keepCapacity)
+    }
+
     // MARK: SetAlgebra
 
     public typealias Element = E
