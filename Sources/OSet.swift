@@ -25,7 +25,7 @@ internal func copy<E>(_ oset: OSet<E>, op: (inout OSet<E>) -> Void) -> OSet<E> {
     return copy
 }
 
-public struct OSet<E: Hashable & Comparable>: SetAlgebra, MutableCollection, RandomAccessCollection {
+public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessCollection {
     internal var a: [E]
     internal var s: Set<E>
 
@@ -221,11 +221,6 @@ public struct OSet<E: Hashable & Comparable>: SetAlgebra, MutableCollection, Ran
         self.a[j] = tmp
     }
 
-    /// Sorts the collection ascendingly, in place.
-    public mutating func sort() {
-        self.a.sort()
-    }
-
     /// Sorts the collection in place, using given comparison predicate.
 #if swift(>=4.0)
     public mutating func sort(by: (E, E) throws -> Bool) rethrows {
@@ -270,6 +265,13 @@ public struct OSet<E: Hashable & Comparable>: SetAlgebra, MutableCollection, Ran
     }
 
     // MARK: - Subscript
+}
+
+extension OSet where E: Comparable {
+    /// Sorts the collection ascendingly, in place.
+    public mutating func sort() {
+        self.a.sort()
+    }
 }
 
 extension OSet: CustomStringConvertible {
