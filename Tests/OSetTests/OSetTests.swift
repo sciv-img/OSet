@@ -23,6 +23,14 @@ import XCTest
 @testable import OSet
 
 class OSetTests: XCTestCase {
+    func testRemoveAll() {
+        var oset = OSet([1, 2, 3])
+        oset.removeAll()
+
+        XCTAssertEqual(oset.a, [])
+        XCTAssertEqual(oset.s, [])
+    }
+
     // MARK: SetAlgebra
 
     func testInit() {
