@@ -1,0 +1,27 @@
+name: run
+
+inputs:
+    swift:
+        required: true
+
+runs:
+    using: "composite"
+    steps:
+        - name: install swiftenv
+          # Tapping separately, because Homebrew cannot decide
+          # if implicit tap should work or not.
+          run: |
+              brew tap kylef/formulae
+              brew install swiftenv
+          shell: bash
+        - name: install swift
+          run: |
+              eval "$(swiftenv init -)"
+              swiftenv install --set-global ${{ inputs.swift }} || true
+          shell: bash
+        - run: |
+              ~/.swiftenv/shims/swift --version
+              ~/.swiftenv/shims/swift build -v
+          shell: bash
+        - run: ~/.swiftenv/shims/swift test
+          shell: bash
