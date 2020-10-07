@@ -1,4 +1,7 @@
-# OSet [![Build Status](https://travis-ci.org/sciv-img/OSet.svg?branch=master)](https://travis-ci.org/sciv-img/OSet)
+# OSet
+[![Build Status](https://github.com/sciv-img/OSet/workflows/tests/badge.svg?branch=master)](https://github.com/sciv-img/OSet/actions?query=workflow%3Atests+branch%3Amaster)
+[![Swift Versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fsciv-img%2FOSet%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/sciv-img/OSet)
+[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fsciv-img%2FOSet%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/sciv-img/OSet)
 
 Fast, idiomatic Ordered Set data structure for Swift.
 
@@ -7,7 +10,7 @@ Fast, idiomatic Ordered Set data structure for Swift.
 Use Swift Package Manager:
 
 ```swift
-.Package(url: "https://github.com/sciv-img/OSet", Version(0, 4, 0))
+.package(url: "https://github.com/sciv-img/OSet", from: "0.5.0")
 ```
 
 If you don't want to/cannot use SwiftPM, you can always copy the source over (it's one file).

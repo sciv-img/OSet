@@ -1,5 +1,4 @@
-OSet
-Copyright © 2017 Karol 'Kenji Takahashi' Woźniak
+Copyright (c) 2017, 2019-2020 Karol 'Kenji Takahashi' Woźniak
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
