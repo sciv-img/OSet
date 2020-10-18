@@ -23,6 +23,8 @@ import XCTest
 @testable import OSet
 
 class OSetTests: XCTestCase {
+    // MARK: RangeReplaceableCollection
+
     func testRemoveAll() {
         var oset = OSet([1, 2, 3])
         oset.removeAll()
@@ -31,6 +33,43 @@ class OSetTests: XCTestCase {
         XCTAssertEqual(oset.s, [])
     }
 
+    func testReplaceSubrange() {
+        let cases = [
+            ([1, 2, 3], 2...2, [5, 6], [1, 2, 5, 6]),
+            ([1, 3, 5], 0...0, [2], [2, 3, 5]),
+            ([1, 3, 5], 0...2, [2, 4, 5], [2, 4, 5]),
+            ([1, 3, 5], 0...2, [], []),
+            ([1, 2], 0...0, [2], [2]),
+            ([1, 2, 3], 0...0, [3], [2, 3])
+        ]
+        cases.forEach({
+            var oset = OSet($0)
+
+            oset.replaceSubrange($1, with: $2)
+
+            XCTAssertEqual(oset.a, $3)
+            XCTAssertEqual(oset.s, Set($3))
+        })
+    }
+    
+    func testAppend() {
+        let cases = [
+            ([], 1, [1]),
+            ([1, 2, 3], 4, [1, 2, 3, 4]),
+            ([1, 2, 3], 1, [1, 2, 3]),
+            ([1, 2, 3], 3, [1, 2, 3])
+        ]
+        cases.forEach({
+            var oset = OSet($0)
+
+            oset.append($1)
+
+            XCTAssertEqual(oset.a, $2)
+            XCTAssertEqual(oset.s, Set($2))
+        })
+    }
+
+    // MARK: - RangeReplaceableCollection
     // MARK: SetAlgebra
 
     func testInit() {

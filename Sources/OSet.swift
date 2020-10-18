@@ -25,17 +25,9 @@ internal func copy<E>(_ oset: OSet<E>, op: (inout OSet<E>) -> Void) -> OSet<E> {
     return copy
 }
 
-public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessCollection {
+public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessCollection, RangeReplaceableCollection {
     internal var a: [E]
     internal var s: Set<E>
-
-    /// Removes all members from the OSet.
-    ///
-    /// - Parameter keepingCapacity: If true, the OSet's buffer capacity is preserved; if false, the underlying buffer is released. The default is false.
-    public mutating func removeAll(keepingCapacity keepCapacity: Bool = false) {
-        a.removeAll(keepingCapacity: keepCapacity)
-        s.removeAll(keepingCapacity: keepCapacity)
-    }
 
     // MARK: SetAlgebra
 
@@ -273,6 +265,36 @@ public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessColl
     }
 
     // MARK: - Subscript
+
+    // MARK: RangeReplaceableCollection
+
+    public init<S>(_ elements: S) where S: Sequence, OSet.Element == S.Element {
+        self.init()
+        self.append(contentsOf: elements)
+    }
+
+    public mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C: Collection, OSet.Element == C.Element {
+        let oldElements = a[subrange]
+
+        oldElements.forEach { self.s.remove($0) }
+
+        var insertedElements = [C.Element]()
+        for newElement in newElements {
+            let (inserted, _) = self.s.insert(newElement)
+            if inserted {
+                insertedElements.append(newElement)
+            }
+        }
+
+        self.a.replaceSubrange(subrange, with: insertedElements)
+    }
+    
+    public mutating func reserveCapacity(_ n: Int) {
+        self.s.reserveCapacity(n)
+        self.a.reserveCapacity(n)
+    }
+
+    // MARK: - RangeReplaceableCollection
 }
 
 extension OSet where E: Comparable {
