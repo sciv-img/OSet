@@ -222,15 +222,9 @@ public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessColl
     }
 
     /// Sorts the collection in place, using given comparison predicate.
-#if swift(>=4.0)
     public mutating func sort(by: (E, E) throws -> Bool) rethrows {
         try self.a.sort(by: by)
     }
-#else
-    public mutating func sort(by: (E, E) -> Bool) {
-        self.a.sort(by: by)
-    }
-#endif
 
     // MARK: - Collection
     // MARK: Subscript
@@ -265,7 +259,6 @@ public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessColl
     }
 
     // MARK: - Subscript
-
     // MARK: RangeReplaceableCollection
 
     public init<S>(_ elements: S) where S: Sequence, OSet.Element == S.Element {
@@ -273,6 +266,17 @@ public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessColl
         self.append(contentsOf: elements)
     }
 
+    /// Replaces the specified subrange of elements with the given collection.
+    ///
+    /// Note that Set, and OSet too, must not contain duplicates.
+    /// Therefore, if one gives a collection that contains item(s) equal to existing one(s),
+    /// they will *not* be replaced. I.e. the old items will stay in their old places.
+    /// This is on par with behaviour of `insert` and also same as `[NSMutableOrderedSet -replaceObjectsAtIndexes:withObjects]`.
+    /// E.g.
+    ///     let oset = OSet([1, 2, 3])
+    ///     oset.replaceSubrange(0...0, [4, 3])
+    ///     print(oset)
+    ///     // Prints "OSet([4, 2, 3])"
     public mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C: Collection, OSet.Element == C.Element {
         let oldElements = a[subrange]
 
