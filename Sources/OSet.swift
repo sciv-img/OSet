@@ -261,9 +261,9 @@ public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessColl
     // MARK: - Subscript
     // MARK: RangeReplaceableCollection
 
-    public init<S>(_ elements: S) where S: Sequence, OSet.Element == S.Element {
+    public init<S>(_ elements: __owned S) where S: Sequence, OSet.Element == S.Element {
         self.init()
-        self.append(contentsOf: elements)
+        for e in elements { self.insert(e) }
     }
 
     /// Replaces the specified subrange of elements with the given collection.
