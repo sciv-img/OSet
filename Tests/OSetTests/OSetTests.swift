@@ -497,6 +497,39 @@ class OSetTests: XCTestCase {
     }
 
     // MARK: - Subscript
+    // MARK: Codable
+
+    func testDecodable() throws {
+        struct Value: Decodable {
+            let set: OSet<Int>
+        }
+        let cases = [
+            ("{ \"set\": [1, 2, 3] }", [1, 2, 3]),
+            ("{ \"set\": [1, 1, 2, 3] }", [1, 2, 3]),
+        ]
+        try cases.forEach {
+            guard let jsonData = $0.data(using: .utf8) else { XCTFail("Expected valid JSON data"); return }
+            let value = try JSONDecoder().decode(Value.self, from: jsonData)
+            XCTAssertEqual(value.set.a, $1)
+            XCTAssertEqual(value.set.s, Set($1))
+        }
+    }
+
+    func testEncodable() throws {
+        struct Value: Encodable {
+            let set: OSet<Int>
+        }
+        let cases = [
+            (Value(set: [1, 2, 3]), "{\"set\":[1,2,3]}"),
+            (Value(set: [1, 1, 2, 3]), "{\"set\":[1,2,3]}"),
+        ]
+        try cases.forEach {
+            let jsonData = try JSONEncoder().encode($0)
+            XCTAssertEqual(String(data: jsonData, encoding: .utf8), $1)
+        }
+    }
+
+    // MARK: - Codable
 
     static var allTests = [
         ("testInit", testInit),

@@ -25,7 +25,7 @@ internal func copy<E>(_ oset: OSet<E>, op: (inout OSet<E>) -> Void) -> OSet<E> {
     return copy
 }
 
-public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessCollection, RangeReplaceableCollection {
+public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessCollection, RangeReplaceableCollection, Hashable {
     internal var a: [E]
     internal var s: Set<E>
 
@@ -299,12 +299,32 @@ public struct OSet<E: Hashable>: SetAlgebra, MutableCollection, RandomAccessColl
     }
 
     // MARK: - RangeReplaceableCollection
+    // MARK: Hashable
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(a)
+    }
+
+    // MARK: - Hashable
 }
 
 extension OSet where E: Comparable {
     /// Sorts the collection ascendingly, in place.
     public mutating func sort() {
         self.a.sort()
+    }
+}
+
+extension OSet: Codable where E: Codable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let elements = try container.decode([E].self)
+        self.init(elements)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(a)
     }
 }
 
