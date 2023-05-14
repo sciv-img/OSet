@@ -14,9 +14,9 @@ jobs:
                       swift: 4.2
                     - os: ubuntu-20.04
                       swift: 4.2
-                    - os: ubuntu-20.04
+                    - os: macos-11
                       swift: 5.6
-                    - os: macos-latest
+                    - os: ubuntu-20.04
                       swift: 5.6
         runs-on: ${{ matrix.os }}
         steps:
