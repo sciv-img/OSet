@@ -3,44 +3,22 @@ name: tests
 on: [push, pull_request]
 
 jobs:
-    macos:
-        runs-on: macos-latest
+    tests:
         strategy:
             fail-fast: false
             matrix:
-                xcode:
-                    - version: 10
-                      swift: "4.2"
-                    - version: 11
-                      swift: "5.0"
-                    - version: 11
-                      swift: "5.1"
-                    - version: 11
-                      swift: "5.2"
-                    - version: 11
-                      swift: "5.3"
-
+                os: [ubuntu-latest, macos-latest]
+                swift: ["4.0", "4.2", "5.7", "5.8"]
+                include:
+                    - os: [ubuntu-20.04, macos-latest]
+                      swift: 5.6
+        runs-on: ${{ matrix.os }}
         steps:
-            - name: find xcode
-              id: find-xcode
-              run: echo ::set-output name=xcode_version::$(ls -d /Applications/Xcode* | grep -v 'beta' | sort -Vr | grep ${{ matrix.xcode.version }} | head -1)
-
-            - uses: actions/checkout@v2
-            - uses: ./.github/workflows/run
+            - uses: swift-actions/setup-swift@v1
               with:
-                  swift: ${{ matrix.xcode.swift }}
-              env:
-                  DEVELOPER_DIR: ${{ steps.find-xcode.outputs.xcode_version }}
-
-    linux:
-        runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                swift: ["4.2", "5.0", "5.1", "5.2", "5.3"]
-
-        steps:
-            - uses: actions/checkout@v2
-            - uses: ./.github/workflows/run
-              with:
-                  swift: ${{ matrix.swift }}
+                  swift-version: ${{ matrix.swift }}
+            - uses: actions/checkout@v3
+            - name: build
+              run: swift build
+            - name: test
+              run: swift test
