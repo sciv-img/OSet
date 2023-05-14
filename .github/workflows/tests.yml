@@ -7,17 +7,17 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                os: [ubuntu-20.04, macos-11]
+                os: [ubuntu-20.04]
                 swift: ["5.2", "5.3", "5.4", "5.5", "5.6"]
                 include:
                     - os: ubuntu-latest
                       swift: 5.7
                     - os: ubuntu-latest
                       swift: 5.8
-                    # - os: macos-11
-                    #   swift: 5.5
-                    # - os: macos-11
-                    #   swift: 5.6
+                    - os: macos-11
+                      swift: 5.5
+                    - os: macos-11
+                      swift: 5.6
                     - os: macos-12
                       swift: 5.7
                     - os: macos-12
